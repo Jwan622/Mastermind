@@ -1,0 +1,7 @@
+steps:
+1) Guess processor class
+  a) obtain a guess. take the string. case insensitive.
+  a) if it's too short, tell them
+  b) if it's too long, tell them
+  c) if they guess correctly, end sequence
+  d) otherwise give feedback if incorrect.
