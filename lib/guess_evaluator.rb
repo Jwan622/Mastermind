@@ -1,16 +1,37 @@
-require_relative './Shuffler1'
-require_relative './guess'
+require_relative './Shuffler1'  # => true, false
+require_relative './guess'      # => false, true
 
 class GuessEvaluator
-  attr_reader :player_guess, :game_answer
+  attr_reader :player_guess_array, :game_answer_array, :combined_array, :count_red_pegs,  # => :count_red_pegs, :count_red_pegs
+  :count_white_pegs, :count_no_pegs                                                       # => nil, nil
 
   def initialize(player_guess, game_answer)
-    @player_guess = player_guess.chars
-    @game_answer = game_answer.chars
+    @player_guess_array = player_guess.chars
+    @game_answer_array = game_answer.chars
     @count_white_pegs = 0
     @count_red_pegs = 0
     @count_no_pegs = 0
   end
+
+  def exact_match_check
+    combined_array = @player_guess_array.zip(@game_answer_array)
+    combined_array.each do |array|
+      if array[0] == array[1]
+        @count_red_pegs += 1
+      end
+    end
+  end
+
+  def white_match_check
+    player_guess_array.each do |element|
+      if game_answer_array.include?(element)
+        @count_white_pegs += 1
+      end
+    end
+    @count_white_pegs -= @count_red_pegs
+  end
+
+
 
   def basic_check
     case player_guess
@@ -23,6 +44,10 @@ class GuessEvaluator
     else
       GuessEvaluate.evaluate(player_guess, game_answer)
     end
+  end
+
+  def exact_match
+    @player_guess_array == @game_answer_array
   end
 
   def self.evaluate(player_guess, game_answer)
