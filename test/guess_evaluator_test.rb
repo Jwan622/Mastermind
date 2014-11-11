@@ -3,8 +3,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 
 require_relative '../lib/guess_evaluator'
-require_relative '../lib/guess'
-require_relative '../lib/Shuffler1'
+
+
 
 class GuessEvaluatorTest < Minitest::Test
 
@@ -26,13 +26,14 @@ class GuessEvaluatorTest < Minitest::Test
     assert_equal 2, evaluator.count_red_pegs
   end
 
-  def test_2_letters_2_white_pegs
+  def test_2_letters_2_white_pegs_1_red_peg
     player_guess = "ryrb"
     game_answer  = "rrbr"
     evaluator = GuessEvaluator.new(player_guess, game_answer)
     evaluator.exact_match_check
     evaluator.white_match_check
     assert_equal 2, evaluator.count_white_pegs
+    assert_equal 1, evaluator.count_red_pegs
   end
 
   def test_3_letters_3_white_1_red_peg
@@ -46,9 +47,13 @@ class GuessEvaluatorTest < Minitest::Test
   end
 
   def test_0_letters_match
-    skip
     player_guess = "rgby"
     game_answer = "pppp"
+    evaluator = GuessEvaluator.new(player_guess, game_answer)
+    evaluator.exact_match_check
+    evaluator.white_match_check
+    assert_equal 0, evaluator.count_white_pegs
+    assert_equal 0, evaluator.count_red_pegs
   end
 
   def test_white_match_check

@@ -1,6 +1,6 @@
 require_relative './Shuffler1'  # => true, false
 require_relative './guess'      # => false, true
-
+require_relative './Messages'
 class GuessEvaluator
   attr_reader :player_guess_array, :game_answer_array, :combined_array, :count_red_pegs,  # => :count_red_pegs, :count_red_pegs
   :count_white_pegs, :count_no_pegs                                                       # => nil, nil
@@ -11,6 +11,7 @@ class GuessEvaluator
     @count_white_pegs = 0
     @count_red_pegs = 0
     @count_no_pegs = 0
+    @messages = Messages.new
   end
 
   def exact_match_check
@@ -19,6 +20,7 @@ class GuessEvaluator
       if array[0] == array[1]
         @count_red_pegs += 1
       end
+      @messages.red_pegs(@count_red_pegs)
     end
   end
 
@@ -29,37 +31,10 @@ class GuessEvaluator
       end
     end
     @count_white_pegs -= @count_red_pegs
+    @messages.white_pegs(@count_white_pegs)
   end
 
-
-
-  def basic_check
-    case player_guess
-    when player_guess.length < 4
-      puts "Your guess is too short. Guess again."
-    when player_guess.length > 4
-      puts "Your guess is too long. Guess again."
-    when player_guess == game_answer
-      puts "Boom Shaka Laka! You win"
-    else
-      GuessEvaluate.evaluate(player_guess, game_answer)
-    end
-  end
-
-  def exact_match
-    @player_guess_array == @game_answer_array
-  end
-
-  def self.evaluate(player_guess, game_answer)
-    player_guess.each do |element|
-      if @answer.include?(element)
-        count_white_pegs += 1
-      elsif element == answer[player_guess.index(element)]
-        count_red_pegs += 1
-        count_white_pegs -= 1
-      else
-        @count_no_pegs += 1
-      end
-    end
+  def exact_match?
+    player_guess_array == game_answer_array
   end
 end
