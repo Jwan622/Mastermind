@@ -15,4 +15,6 @@ class Mastermind_CLI_Test < Minitest::Test
     phone_book.lookup('Smith, Alice')
     repository.verify
   end
+
+  def 
   def

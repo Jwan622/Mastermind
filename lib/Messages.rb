@@ -8,13 +8,16 @@ class Messages
     "Your guess is too long! Try again!"
   end
 
+  def wrong_length
+    "YOur guess is not the right length. Try again!"
+  end
+
   def intro_greeting
     "Welcome to Mastermind! Select 'p' to play, 'q' to quit"
   end
 
   def guess_request
-    "\nWhat is your 4 color guess? Use 'r' for red, 'y' for yellow, 'p' for purple,
-    'b' for blue, 'w' for white, 'g' for green."
+    "\nWhat is your 4 color guess? Use 'r' for red, 'y' for yellow, 'p' for purple, 'b' for blue, 'w' for white, 'g' for green."
   end
 
   def not_valid_input
@@ -26,8 +29,7 @@ class Messages
   end
 
   def instruction_reminder
-    "Remember, you are trying to guess the 4 colors that I picked. Guess using 'r' for red, 'y' for yellow, 'p' for purple,
-    'b' for blue, 'w' for white, 'g' for green."
+    "Here are the instructions to Mastermind. You are trying to crack a computer code. You need to guess the 4 colors that I picked. Guess using 'r' for red, 'y' for yellow, 'p' for purple, 'b' for blue, 'w' for white, 'g' for green. You have 20 turns to guess the correct code. \nGood luck!"
   end
 
   def red_pegs(number)
@@ -35,16 +37,15 @@ class Messages
   end
 
   def white_pegs(number)
-    "your guess returns #{number} white pegs."
+    "Your guess returns #{number} white pegs."
   end
 
   def turn_number_print(number)
-    "Your turn number is #{number}. You have {20 - number} turns left."
+    "Your turn number is #{number}. You have #{20-number} turns left."
   end
 
   def game_win
-    "You have successfully cracked the computer code! Well done."
-    guess_request
+    "You have successfully cracked the computer code! Well done.\n#{intro_greeting}"
   end
 
   def no_spaces

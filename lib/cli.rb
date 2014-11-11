@@ -1,8 +1,9 @@
 require_relative 'Messages'
 require_relative 'Shuffler1'
+require_relative 'game'
 
 class CLI
-  attr_reader :messages, :player_guess
+  attr_reader :messages, :input_command, :outstream, :instream
   def initialize(instream, outstream)
     @instream = instream
     @outstream = outstream
@@ -14,37 +15,33 @@ class CLI
     outstream.puts messages.intro_greeting
 
     loop do
-      outstream.puts messages.guess_request
       @input_command = instream.gets.strip.downcase
-
       case
       when play?
-        game = Game.new
+        game = Game.new(instream, outstream, messages)
         game.play
       when instructions?
-        messages.instruction_reminder
+        puts messages.instruction_reminder
       when finished?
-        messages.quit_message
+        puts messages.quit_message
         break
       else
         messages.not_valid_input
       end
-
     end
-    outstream.puts message_ending
   end
 
   private
 
   def finished?
-    player_guess == "q" || "quit"
+    input_command == "q" || input_command == "quit"
   end
 
   def play?
-    player_guess == "p" || "play"
+    input_command == "p" || input_command == "play"
   end
 
   def instructions?
-    player_Guess == "i" || "instructions"
+    input_command == "i" || input_command == "instructions"
   end
 end
