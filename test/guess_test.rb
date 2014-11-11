@@ -1,44 +1,44 @@
 gem 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
-
-require_relative '../lib/guess_evaluator'
 require_relative '../lib/guess'
 
 class GuessTest < Minitest::Test
 
-  def test_downcasing_works
-    guess_object = Guess.new("RRGB")
-    assert_equal "rrgb", guess_object.user_answer
-  end
-
   def test_right_length
     player_guess = Guess.new("rrgb")
-    assert_equal 4, player_guess.user_answer.size
+    assert player_guess.valid_length?
   end
 
   def test_too_short
     player_guess = Guess.new("rgb")
-    refute_equal 4, player_guess.user_answer.length
+    refute player_guess.valid_length?
+    assert player_guess.too_short?
   end
+
+  def test_too_long
+    player_guess = Guess.new("jalskfjadsklf")
+    refute player_guess.valid_length?
+    assert player_guess.too_long?
+  end
+
 
   def test_right_letters
-    player_guess = Guess.new("rgbz")
-    player_guess_array = player_guess.user_answer.chars
-    player_guess_check = player_guess_array.all? {|letter| letter == (/[rgbyrp]/)}
-    refute player_guess_check, "wrong letters"
+    player_guess1 = Guess.new("rgbz")
+    player_guess2 = Guess.new("rpgy")
+    assert player_guess2.right_letters?
+    refute player_guess1.right_letters?
   end
 
-  def test_player_guess_is_a_string
-    player = Guess.new
-    player_guess = player.user_answer
-    assert_equal String, player_guess.class, "player_guess is not in string form"
+  def test_player_guess_only_has_letters
+    player1 = Guess.new("1gbr")
+    player2 = Guess.new("rrgb")
+    refute player1.is_letters?
+    assert player2.is_letters?
   end
 
-  def test_breaks_colors_down_to_single_letters
-    player1 = Guess.new("RED")
-    player2 = Guess.new("Red")
-    assert_equal "r", player1.user_answer
-    assert_equal "r", player2.user_answer
+  def
 
+  end
+end
 end
