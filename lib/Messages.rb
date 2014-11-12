@@ -64,7 +64,11 @@ class Messages
     "You took too many turns and you couldn't crack the code. Try again!\n"
   end
 
-  def starter(time)
-    "The game has begun. The start time is #{time}. The pressure is on."
+  def starter(hour, minute, second)
+    "The game has begun. The start time is #{hour}:#{minute}:#{second}. The pressure is on."
+  end
+
+  def ending_time(hour, minute, second)
+    "The game has ended. Your end time is #{hour}:#{minute}:#{second}."
   end
 end

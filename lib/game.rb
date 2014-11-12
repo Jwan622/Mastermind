@@ -5,7 +5,7 @@ require_relative 'timer'
 
 class Game
 
-  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score, :time_begin, :timer
+  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score
 
   def initialize(instream, outstream, messages)
     @player_guess = ""
@@ -15,8 +15,6 @@ class Game
     @turn_number = 0
     @outstream = outstream
     @score = 20
-    @time_end = 0
-    @total_time = 0
   end
 
   def guess
@@ -62,9 +60,9 @@ class Game
 
     if evaluator.exact_match?
       puts messages.say_score(@score)
-      time_end = Time.new
-      @total_time = (time_end - @time_begin).to_i
-      puts messages.game_win(@total_time)
+      timer.timer_end
+      total_time = (timer.end_time - timer.start_time).to_i
+      puts messages.game_win(total_time)
     elsif lost?
       puts messages.game_lost
     end

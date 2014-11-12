@@ -11,12 +11,20 @@ class Timer
   end
 
   def timer_start
-    self.start_time = Time.new
-    puts @messages.starter(start_time)
+    time_instance = Time.now
+    self.start_time = time_instance
+    hour = time_instance.strftime("%H").rjust(2,'0')
+    minute = time_instance.strftime("%M").rjust(2,'0')
+    second = time_instance.strftime("%S").rjust(2,'0')
+    puts @messages.starter(hour, minute, second)
   end
 
   def timer_end
-    self.end_time = Time.new
+    time_instance = Time.now
+    self.end_time = time_instance
+    hour = time_instance.strftime("%H").rjust(2,'0')
+    minute = time_instance.strftime("%M").rjust(2,'0')
+    second = time_instance.strftime("%S").rjust(2,'0')
+    puts @messages.ending_time(hour, minute, second)
   end
-
 end
