@@ -4,21 +4,24 @@ require_relative 'guess_evaluator'
 
 class Game
 
-  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score
+  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score, :time_begin
 
   def initialize(instream, outstream, messages)
     @player_guess = ""
     @comp_answer = Shuffler.new.comp_answer
-    @turn_number = 0
     @instream = instream
     @messages = messages
+    @turn_number = 0
     @outstream = outstream
     @score = 20
+    @time_begin = Time.new
+    @time_end = 0
+    @total_time = 0
   end
 
   def guess
     puts messages.guess_request
-    @player_guess = instream.gets.chomp.downcase
+    self.player_guess = instream.gets.chomp.downcase #
     process_guess
   end
 
@@ -41,17 +44,15 @@ class Game
   def play
     p "#{comp_answer} is the computer answer"
     guess
-
     evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
 
-    until evaluator.exact_match? || quitting?
+    until evaluator.exact_match? || quitting? || lost?
       puts "in until loop"
       #<turn>
       evaluator.exact_match_check
       evaluator.white_match_check
-      @turn_number += 1
-      #why is it when I turn above into turn_number += 1 it fails?
-      @score -= 1
+      self.turn_number += 1
+      self.score -= 1
       puts messages.turn_number_print(turn_number)
       guess
       evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
@@ -59,7 +60,11 @@ class Game
 
     if evaluator.exact_match?
       puts messages.say_score(@score)
-      puts messages.game_win
+      time_end = Time.new
+      @total_time = (time_end - @time_begin).to_i
+      puts messages.game_win(@total_time)
+    elsif lost?
+      puts messages.game_lost
     end
   end
 
@@ -75,15 +80,15 @@ private
 
   def not_a_valid_guess?
     @player_guess.chars.all? do |character|
-      # character =~ /[rgbpyw]/
       "rgbpyw".include?(character)
     end
   end
 
   def has_spaces?
     player_guess.include?(" ")
-    # player_guess.chars.include? do |character|
-    #   character == /[s]/
-    # end
+  end
+
+  def lost?
+    self.turn_number == 20
   end
 end

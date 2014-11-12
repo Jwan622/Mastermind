@@ -4,17 +4,18 @@ require_relative 'game'
 
 class CLI
   attr_reader :messages, :input_command, :outstream, :instream
+
   def initialize(instream, outstream)
     @instream = instream
     @outstream = outstream
     @messages = Messages.new
     @input_command = ""
+
   end
 
   def start
-
-
     loop do
+      #how can I quit from the color selection without having to press q again to quit.
       outstream.puts messages.intro_greeting
       @input_command = instream.gets.strip.downcase
       case

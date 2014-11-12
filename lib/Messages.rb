@@ -9,11 +9,11 @@ class Messages
   end
 
   def wrong_length
-    "YOur guess is not the right length. Try again!"
+    "Your guess is not the right length. Try again!"
   end
 
   def intro_greeting
-    "Welcome to Mastermind! Select 'p' to play, 'q' to quit"
+    "Welcome to Mastermind! Select 'p' to play, 'q' to quit' or 'i' for instructions."
   end
 
   def guess_request
@@ -44,8 +44,8 @@ class Messages
     "Your turn number is #{number}. You have #{20-number} turns left."
   end
 
-  def game_win
-    "You have successfully cracked the computer code! Well done.\n#{intro_greeting}"
+  def game_win(time)
+    "You have successfully cracked the computer code in #{time/60} minutes! Well done.}"
   end
 
   def no_spaces
@@ -58,5 +58,9 @@ class Messages
 
   def quitter_during_guessing
     "Your are quitting because you are weak. You lose."
+  end
+
+  def game_lost
+    "You took too many turns and you couldn't crack the code. Try again!\n"
   end
 end
