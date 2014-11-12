@@ -63,4 +63,8 @@ class Messages
   def game_lost
     "You took too many turns and you couldn't crack the code. Try again!\n"
   end
+
+  def starter(time)
+    "The game has begun. The start time is #{time}. The pressure is on."
+  end
 end

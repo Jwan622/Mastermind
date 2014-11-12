@@ -1,10 +1,11 @@
 require_relative 'Shuffler1'
 require_relative 'Messages'
 require_relative 'guess_evaluator'
+require_relative 'timer'
 
 class Game
 
-  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score, :time_begin
+  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score, :time_begin, :timer
 
   def initialize(instream, outstream, messages)
     @player_guess = ""
@@ -14,7 +15,6 @@ class Game
     @turn_number = 0
     @outstream = outstream
     @score = 20
-    @time_begin = Time.new
     @time_end = 0
     @total_time = 0
   end
@@ -42,6 +42,8 @@ class Game
   end
 
   def play
+    timer = Timer.new
+    timer.timer_start
     p "#{comp_answer} is the computer answer"
     guess
     evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
