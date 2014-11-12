@@ -57,6 +57,8 @@ class GuessEvaluatorTest < Minitest::Test
   end
 
   def test_white_match_check
-
+    player_guess = "rrrb"
+    game_answer = "rwwr"
+    #what should this return?
   end
 end

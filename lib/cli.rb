@@ -12,9 +12,10 @@ class CLI
   end
 
   def start
-    outstream.puts messages.intro_greeting
+
 
     loop do
+      outstream.puts messages.intro_greeting
       @input_command = instream.gets.strip.downcase
       case
       when play?

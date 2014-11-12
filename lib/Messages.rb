@@ -17,7 +17,7 @@ class Messages
   end
 
   def guess_request
-    "\nWhat is your 4 color guess? Use 'r' for red, 'y' for yellow, 'p' for purple, 'b' for blue, 'w' for white, 'g' for green."
+    "\nWhat is your 4 color guess? Use 'r' for red, 'y' for yellow, 'p' for purple, 'b' for blue, 'w' for white, 'g' for green. You can also type in 'quit' to quit the game."
   end
 
   def not_valid_input
@@ -50,5 +50,13 @@ class Messages
 
   def no_spaces
     "Don't put spaces between your guess! You guess should be something like 'rrgb'"
+  end
+
+  def say_score(score)
+    "Your score this round is #{score}."
+  end
+
+  def quitter_during_guessing
+    "Your are quitting because you are weak. You lose."
   end
 end

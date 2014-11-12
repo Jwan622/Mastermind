@@ -39,10 +39,14 @@ class GuessEvaluator
   def peg_reset_for_next_round
     @count_white_pegs = 0
     @count_red_pegs = 0
-    player_guess = @player_guess
+    # player_guess = @player_guess
   end
 
   def exact_match?
     player_guess_array == game_answer_array
+  end
+
+  def quitter?
+    player_guess_array == ["q", "u", "i", "t"]
   end
 end
