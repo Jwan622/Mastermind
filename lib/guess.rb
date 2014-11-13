@@ -1,5 +1,3 @@
-
-
 require_relative './shuffler1'  # => true
 require_relative './guess_evaluator'
 

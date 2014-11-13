@@ -28,8 +28,9 @@ class TestValidateGuess < Minitest:Test
     ValidateGuess.new('rrrr', )
   end
 
-def test_incorrect
-  ValidateGuess.new('rrrr', 4, ['r']).valid?
-  Validate.Guess.new('rrxr', 4, ['r']).valid?
-  Validate.Guess.new('rrrrr', 4, ['r']).valid?
+  def test_incorrect
+    ValidateGuess.new('rrrr', 4, ['r']).valid?
+    Validate.Guess.new('rrxr', 4, ['r']).valid?
+    Validate.Guess.new('rrrrr', 4, ['r']).valid?
+  end
 end

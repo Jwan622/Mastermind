@@ -17,6 +17,25 @@ class Game
     @score = 20
   end
 
+  def play
+    timer = Timer.new
+    timer.timer_start
+    p "#{comp_answer} is the computer answer"
+    guess
+    evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
+    check_guess(evaluator)
+    if quitting?
+
+    elsif lost?
+      puts messages.game_lost
+    else
+      puts messages.say_score(@score)
+      timer.timer_end
+      total_time = (timer.end_time - timer.start_time).to_i
+      puts messages.game_win(total_time)
+    end
+  end
+
   def guess
     puts messages.guess_request
     self.player_guess = instream.gets.chomp.downcase #
@@ -39,16 +58,11 @@ class Game
     end
   end
 
-  def play
-    timer = Timer.new
-    timer.timer_start
-    p "#{comp_answer} is the computer answer"
-    guess
-    evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
+  private
 
+  def check_guess(evaluator)
     until evaluator.exact_match? || quitting? || lost?
       puts "in until loop"
-      #<turn>
       evaluator.exact_match_check
       evaluator.white_match_check
       self.turn_number += 1
@@ -56,19 +70,9 @@ class Game
       puts messages.turn_number_print(turn_number)
       guess
       evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
-    end
-
-    if evaluator.exact_match?
-      puts messages.say_score(@score)
-      timer.timer_end
-      total_time = (timer.end_time - timer.start_time).to_i
-      puts messages.game_win(total_time)
-    elsif lost?
-      puts messages.game_lost
+      break if evaluator.exact_match?
     end
   end
-
-private
 
   def its_not_4
     player_guess.length != 4
@@ -79,9 +83,13 @@ private
   end
 
   def not_a_valid_guess?
+    # @player_guess.chars.all? do |character|
+    #   "rgbpyw".include?(character)
+    # end
     @player_guess.chars.all? do |character|
-      "rgbpyw".include?(character)
+      character =~ /[rgybpw]/
     end
+
   end
 
   def has_spaces?

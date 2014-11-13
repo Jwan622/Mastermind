@@ -9,7 +9,6 @@ class CLI
     @instream = instream
     @outstream = outstream
     @messages = Messages.new
-    @input_command = ""
 
   end
 

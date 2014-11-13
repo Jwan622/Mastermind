@@ -45,7 +45,7 @@ class Messages
   end
 
   def game_win(time)
-    "You have successfully cracked the computer code in #{time/60} minutes! Well done.}"
+    "\nYou have successfully cracked the computer code in #{time/60} minutes! Well done. Play again!"
   end
 
   def no_spaces
