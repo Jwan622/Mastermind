@@ -1,35 +1,42 @@
-def test_breaks_colors_down_to_single_letters
-  player1 = Guess.new("RED")
-  player2 = Guess.new("Red")
-  assert_equal "r", player1.user_answer
-  assert_equal "r", player2.user_answer
-end
+gem 'minitest'
+require './lib/cli'
+require 'minitest/autorun'
+require 'minitest/pride'
 
-
-# class ValidateGuess
-#   attr_accessor :valid_colors, :guess, :length
-#
-#   def initialize(guess, length, valid_colors)
-#     self.guess = guess
-#     self.valid_colors = valid_colors
-#     self.length = length
-#   end
-#
-#
-#   def valid?
-#     return false unless guess.length == length
-#     guess.chars.all? {|char| valid_colors.include? char}
-#   end
-# end
-#
-
-class TestValidateGuess < Minitest:Test
-  def test_correct
-    ValidateGuess.new('rrrr', )
+class TestCLI < Minitest::Test
+  def test_quit_when_type_q
+    cli = CLI.new($stdin, $stdout)
+    cli.input_command = "q"
+    assert cli.finished?
+    refute cli.play?
   end
 
-def test_incorrect
-  ValidateGuess.new('rrrr', 4, ['r']).valid?
-  Validate.Guess.new('rrxr', 4, ['r']).valid?
-  Validate.Guess.new('rrrrr', 4, ['r']).valid?
+  def test_quit_when_type_quit
+    cli = CLI.new($stdin, $stdout)
+    cli.input_command = "quit"
+    assert cli.finished?
+    refute cli.play?
+  end
+
+  def test_play_when_type_p
+    cli = CLI.new($stdin, $stdout)
+    cli.input_command = "p"
+    assert cli.play?
+    refute cli.finished?
+  end
+
+  def test_play_when_type_play
+    cli = CLI.new($stdin, $stdout)
+    cli.input_command = "play"
+    assert cli.play?
+    refute cli.finished?
+  end
+
+  def test_breaks_colors_down_to_single_letters
+    skip
+    player1 = Guess.new("RED")
+    player2 = Guess.new("Red")
+    assert_equal "r", player1.user_answer
+    assert_equal "r", player2.user_answer
+  end
 end

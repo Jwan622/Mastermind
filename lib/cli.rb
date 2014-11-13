@@ -3,14 +3,13 @@ require_relative 'Shuffler1'
 require_relative 'game'
 
 class CLI
-  attr_reader :messages, :input_command, :outstream, :instream
+  attr_accessor :messages, :input_command, :outstream, :instream
 
   def initialize(instream, outstream)
     @instream = instream
     @outstream = outstream
     @messages = Messages.new
     @input_command = ""
-
   end
 
   def start
@@ -32,8 +31,6 @@ class CLI
       end
     end
   end
-
-  private
 
   def finished?
     input_command == "q" || input_command == "quit"
