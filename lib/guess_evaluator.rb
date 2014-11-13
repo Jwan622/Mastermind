@@ -1,17 +1,19 @@
 require_relative './Shuffler1'
 require_relative './guess'
 require_relative './Messages'
+
 class GuessEvaluator
+
   attr_reader :player_guess_array, :game_answer_array, :combined_array,
-  :count_no_pegs, :messages
+              :messages, :count_white_output, :count_red_output
 
   attr_accessor :count_white_pegs, :count_red_pegs
+
   def initialize(player_guess, game_answer, messages)
     @player_guess_array = player_guess.chars
     @game_answer_array = game_answer.chars
     @count_white_pegs = 0
     @count_red_pegs = 0
-    @count_no_pegs = 0
     @messages = messages
   end
 
@@ -22,6 +24,7 @@ class GuessEvaluator
         @count_red_pegs += 1
       end
     end
+    @count_red_output = @count_red_pegs
     puts messages.red_pegs(@count_red_pegs)
   end
 
@@ -32,7 +35,9 @@ class GuessEvaluator
       end
     end
     @count_white_pegs -= @count_red_pegs
+    @count_white_output = @count_white_pegs
     puts messages.white_pegs(@count_white_pegs)
+
     peg_reset_for_next_round
   end
 

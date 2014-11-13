@@ -3,11 +3,9 @@ require_relative 'Shuffler1'
 require_relative 'game'
 
 class CLI
-  attr_accessor :messages, :input_command, :outstream, :instream
+  attr_accessor :messages, :input_command
 
-  def initialize(instream, outstream)
-    @instream = instream
-    @outstream = outstream
+  def initialize
     @messages = Messages.new
     @input_command = ""
   end
@@ -15,11 +13,11 @@ class CLI
   def start
     loop do
       #how can I quit from the color selection without having to press q again to quit.
-      outstream.puts messages.intro_greeting
-      @input_command = instream.gets.strip.downcase
+      puts messages.intro_greeting
+      @input_command = gets.strip.downcase
       case
       when play?
-        game = Game.new(instream, outstream, messages)
+        game = Game.new(messages)
         game.play
       when instructions?
         puts messages.instruction_reminder

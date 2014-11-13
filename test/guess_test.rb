@@ -38,8 +38,5 @@ class GuessTest < Minitest::Test
     assert player2.is_letters?
   end
 
-  def
 
-  end
-end
 end

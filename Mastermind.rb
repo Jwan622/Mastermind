@@ -3,4 +3,4 @@ $LOAD_PATH.unshift(lib_dir) #now we can require things inside of lib
 puts __dir__
 require 'CLI'
 
-CLI.new($stdin, $stdout).start
+CLI.new.start

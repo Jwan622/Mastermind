@@ -2,25 +2,25 @@ require_relative 'Shuffler1'
 require_relative 'Messages'
 require_relative 'guess_evaluator'
 require_relative 'timer'
+require './lib/game_history'
 
 class Game
 
-  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :instream, :outstream, :score
+  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :score
 
-  def initialize(instream, outstream, messages)
+  def initialize(messages)
     @player_guess = ""
     @comp_answer = Shuffler.new.comp_answer
-    @instream = instream
     @messages = messages
     @turn_number = 0
-    @outstream = outstream
     @score = 20
+    @log = HighScoreHistory.new(@score)
   end
 
   def play
     timer = Timer.new
     timer.timer_start
-    
+
     guess
     evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
     check_guess(evaluator)
@@ -38,7 +38,7 @@ class Game
 
   def guess
     puts messages.guess_request
-    self.player_guess = instream.gets.chomp.downcase #
+    self.player_guess = gets.chomp.downcase #
     process_guess
   end
 
@@ -58,6 +58,7 @@ class Game
     end
   end
 
+
   def check_guess(evaluator)
     until evaluator.exact_match? || quitting? || lost?
       puts "in until loop"
@@ -71,6 +72,9 @@ class Game
       break if evaluator.exact_match?
     end
   end
+
+
+
 
   def its_not_4
     player_guess.length != 4
