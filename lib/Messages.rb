@@ -61,18 +61,26 @@ class Messages
   end
 
   def quitter_during_guessing
-    "Your are quitting because you are weak. You lose."
+    "Your are quitting because you are weak. You lose.\n"
   end
 
   def game_lost
     "You took too many turns and you couldn't crack the code. Try again!\n"
   end
 
-  def starter(hour, minute, second)
-    "The game has begun. The start time is #{hour}:#{minute}:#{second}. The pressure is on."
-  end
+  # def starter(hour, minute, second)
+  #   "The game has begun. The start time is #{hour}:#{minute}:#{second}. The pressure is on."
+  # end
 
   def ending_time(hour, minute, second)
     "The game has ended. Your end time is #{hour}:#{minute}:#{second}."
+  end
+
+  def starter2(time)
+    hour = time.strftime("%H").rjust(2,'0')
+    minute = time.strftime("%M").rjust(2,'0')
+    second = time.strftime("%S").rjust(2,'0')
+    # starter(hour, minute, second)
+    "The game has begun. The start time is #{hour}:#{minute}:#{second}. The pressure is on."
   end
 end

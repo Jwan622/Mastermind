@@ -3,10 +3,11 @@ require_relative 'Messages'
 require_relative 'guess_evaluator'
 require_relative 'timer'
 require './lib/game_history'
+require './lib/player'
 
 class Game
 
-  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :score
+  attr_accessor :player_guess, :comp_answer, :messages, :turn_number, :score, :total_time
 
   def initialize(messages)
     @player_guess = ""
@@ -14,31 +15,40 @@ class Game
     @messages = messages
     @turn_number = 0
     @score = 20
-    @log = HighScoreHistory.new(@score)
+    @game_log = HighScoreHistory.new(@player, @score)
+    current_player = Player.new(player_guess, score, total_time)
   end
 
-  def play
+  def player_init
+    current_player.name = gets.chomp.downcase
+    play(current_player)
+  end
+
+  def play(current_player)
     timer = Timer.new
     timer.timer_start
-
+    puts @messages.starter2(timer.start_time)
     guess
     evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
     check_guess(evaluator)
 
     if quitting?
+      next
     elsif lost?
       puts messages.game_lost
     else
       puts messages.say_score(@score)
       timer.timer_end
-      total_time = (timer.end_time - timer.start_time).to_i
+      self.total_time = (timer.end_time - timer.start_time).to_i
+      current_player.time = total_time
+      @game_log.log << current_player.time
       puts messages.game_win(total_time)
     end
   end
 
   def guess
     puts messages.guess_request
-    self.player_guess = gets.chomp.downcase #
+    self.player_guess = gets.chomp.downcase
     process_guess
   end
 
@@ -58,14 +68,12 @@ class Game
     end
   end
 
-
   def check_guess(evaluator)
     until evaluator.exact_match? || quitting? || lost?
       puts "in until loop"
       evaluator.exact_match_check
       evaluator.white_match_check
-      self.turn_number += 1
-      self.score -= 1
+      increment
       puts messages.turn_number_print(turn_number)
       guess
       evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
@@ -73,8 +81,10 @@ class Game
     end
   end
 
-
-
+  def increment
+    self.turn_number += 1
+    self.score -= 1
+  end
 
   def its_not_4
     player_guess.length != 4

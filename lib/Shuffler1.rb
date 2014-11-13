@@ -1,20 +1,20 @@
 class Shuffler
 
-  attr_reader :comp_answer  # => nil
+  attr_reader :comp_answer
 
   def initialize
-    @computer_sequence = []                    # => []
-    @choices = ["r", "y", "w", "b", "p", "g"]  # => ["r", "y", "w", "b", "p", "g"]
-    sequence                                   # => "ybgp"
+    @computer_sequence = []
+    @choices = ["r", "y", "w", "b", "p", "g"]
+    sequence
   end
 
   def sequence
-    4.times do                               # => 4
-      @computer_sequence << @choices.sample  # => ["y"], ["y", "b"], ["y", "b", "g"], ["y", "b", "g", "p"]
-    end                                      # => 4
-    @comp_answer = @computer_sequence.join   # => "ybgp"
+    4.times do
+      @computer_sequence << @choices.sample
+    end
+    @comp_answer = @computer_sequence.join
   end
 end
 
-computer = Shuffler.new  # => #<Shuffler:0x007fbbfc8a4098 @computer_sequence=["y", "b", "g", "p"], @choices=["r", "y", "w", "b", "p", "g"], @comp_answer="ybgp">
-computer.comp_answer     # => "ybgp"
+computer = Shuffler.new
+computer.comp_answer

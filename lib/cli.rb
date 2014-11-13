@@ -18,7 +18,7 @@ class CLI
       case
       when play?
         game = Game.new(messages)
-        game.play
+        game.player_init
       when instructions?
         puts messages.instruction_reminder
       when finished?
