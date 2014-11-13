@@ -20,7 +20,7 @@ class Game
   def play
     timer = Timer.new
     timer.timer_start
-    p "#{comp_answer} is the computer answer"
+    
     guess
     evaluator = GuessEvaluator.new(@player_guess, @comp_answer, messages)
     check_guess(evaluator)
@@ -57,8 +57,6 @@ class Game
       guess
     end
   end
-
-  private
 
   def check_guess(evaluator)
     until evaluator.exact_match? || quitting? || lost?

@@ -20,8 +20,12 @@ class Messages
     "\nWhat is your 4 color guess? Use 'r' for red, 'y' for yellow, 'p' for purple, 'b' for blue, 'w' for white, 'g' for green. You can also type in 'quit' to quit the game."
   end
 
+  def not_valid_input_on_first_screen
+    "That isn't a valid choice. Try again.\n"
+  end
+
   def not_valid_input
-    "That isn't a valid choice. Try again. Remember, input your colors as consecutive single letters."
+    "\nThat isn't a valid guess. Remember your 4-letter guess can only include the letters [r,g,p,y,w,b]. Guess again!"
   end
 
   def quit_message

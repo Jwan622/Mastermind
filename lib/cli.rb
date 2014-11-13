@@ -27,7 +27,7 @@ class CLI
         puts messages.quit_message
         break
       else
-        messages.not_valid_input
+        puts messages.not_valid_input_on_first_screen
       end
     end
   end
