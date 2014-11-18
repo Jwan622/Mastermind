@@ -33,7 +33,7 @@ class Game
     check_guess(evaluator)
 
     if quitting?
-      next
+
     elsif lost?
       puts messages.game_lost
     else

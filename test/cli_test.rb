@@ -1,3 +1,7 @@
+require 'simplecov' #this line and simpleCov.start needs to be up top. rqeuire and SimpleCov.start need to be above require anything else.
+SimpleCov.start
+
+
 gem 'minitest'
 require './lib/cli'
 require 'minitest/autorun'
